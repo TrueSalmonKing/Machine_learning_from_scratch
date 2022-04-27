@@ -1,7 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as mp
 
-data = pd.read_csv('../Real estate.csv')
+data = pd.read_csv('../data/Real estate.csv')
 
 
 # Calculating the sample variance
