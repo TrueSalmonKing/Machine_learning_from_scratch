@@ -1,6 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as mp
 
+# Taken from https://www.kaggle.com/datasets/quantbruce/real-estate-price-prediction
 data = pd.read_csv('../data/Real estate.csv')
 
 
