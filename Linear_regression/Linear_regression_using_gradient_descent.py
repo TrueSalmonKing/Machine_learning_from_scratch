@@ -128,7 +128,7 @@ def mv_update_weights(features, data_values, weights, learning_rate):
 
     # Extracting the features
     x1 = features[:, 0]
-    x2 = [0]*414
+    x2 = features[:, 1]
     x3 = features[:, 2]
 
     # print(np.dot(x3, (data_values - predicted_values)))
@@ -148,13 +148,13 @@ def mv_update_weights(features, data_values, weights, learning_rate):
 # Linear regression implementation, where we use gradient descent to minimize the mean square error
 # In order to reach the closest possible line function that can predict values to the upmost accuracy
 def multivariable_regression():
-    train_rate = 0.005
+    train_rate = 0.009
     weights = [0.0, 0.0, 0.0]
-    epoch = 300
-    mse_values = [0]*300
+    epoch = 30000
+    mse_values = [0]*epoch
 
     features = mv_features_selection(data)
-    data_values = data.iloc[:, 7]
+    data_values = data.iloc[:, 7].values
     mse = mv_mean_square_error(features, data_values, weights)
     print("mean square error is : " + str(mse))
 
