@@ -127,20 +127,27 @@ def mv_update_weights(features, data_values, weights, learning_rate):
     n = len(data_values)
 
     # Extracting the features
-    x1 = features[:, 0]
-    x2 = features[:, 1]
-    x3 = features[:, 2]
+    # x1 = features[:, 0]
+    # x2 = features[:, 1]
+    # x3 = features[:, 2]
 
     # print(np.dot(x3, (data_values - predicted_values)))
 
     # Using the dot product to calculate the partial derivative for each weight
-    dw1 = (-2.0 * np.dot(x1, (data_values - predicted_values))) / n
-    dw2 = (-2.0 * np.dot(x2, (data_values - predicted_values))) / n
-    dw3 = (-2.0 * np.dot(x3, (data_values - predicted_values))) / n
+    # dw1 = (-2.0 * np.dot(x1, (data_values - predicted_values))) / n
+    # dw2 = (-2.0 * np.dot(x2, (data_values - predicted_values))) / n
+    # dw3 = (-2.0 * np.dot(x3, (data_values - predicted_values))) / n
 
-    weights[0] -= (learning_rate * dw1)
-    weights[1] -= (learning_rate * dw2)
-    weights[2] -= (learning_rate * dw3)
+    # weights[0] -= (learning_rate * dw1)
+    # weights[1] -= (learning_rate * dw2)
+    # weights[2] -= (learning_rate * dw3)
+
+    # We simplify the above using matrix multiplications --> vectorized gradient descent
+
+    # gradient (3,1) = features.T (3,414) . ( data_values - predicted_values ) (414,1)
+    gradient = (-2.0 * np.dot(features.T, (data_values - predicted_values))) / n
+
+    weights -= (learning_rate * gradient)
 
     return weights
 
