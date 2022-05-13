@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="98c9163b-ac9a-4ef8-8533-def91843aa79" name="Changes" comment="Initial upload">
-      <change beforePath="$PROJECT_DIR$/.idea/Machine_learning_from_scratch.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Machine_learning_from_scratch.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Linear_regression/Linear_regression_using_gradient_descent.py" beforeDir="false" afterPath="$PROJECT_DIR$/Linear_regression/Linear_regression_using_gradient_descent.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
