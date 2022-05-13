@@ -83,20 +83,26 @@ def linear_regression():
 
 # ---------------------------------------Multivariable regression--------------------------------------- #
 
-# Calculating gradient can take a long time as the number of features grow, as such we only focus on two features at
-# a time (Transaction date, House age and Number of convenience stores)
+# Calculating gradient can take a long time as the number of features grow, as such we only focus on three features at
+# a time (Transaction date, House age and Number of convenience stores) in addition to a bias
 def mv_features_selection(features):
-    return mv_normalize(features.iloc[:, 2:5].values)
+    # Initial value of the bias is set to 1
+    # With the addition of a bias, we allow our prediction function to be more accurate as it no longer strictly goes
+    # through the origin (0, 0)
+    # In the example using this dataset, we were effectively able to go from a convergent minimum value of mse 1527.26
+    # to 84.72, close to ~92% reduction
+    bias = np.ones(shape=(len(features), 1))
+    return np.append(bias, features.iloc[:, 2:5].values, axis=1)
 
 
 # We will also speed up the process by using Zero Mean Normalization. This will allow us to effectively turn the
 # range of values for the features into [-1:1]
 def mv_normalize(features):
-
-    for i in range(3):
+    for i in range(4):
         f_mean = np.mean(features[:, i])
-        f_range = np.max(features[:, i]) - np.min(features[:, i])
-        features[:, i] = (features[:, i] - f_mean)/f_range
+        f_range = np.amax(features[:, i]) - np.amin(features[:, i])
+        if f_range:
+            features[:, i] = (features[:, i] - f_mean) / f_range
 
     return features
 
@@ -112,7 +118,7 @@ def mv_predict(features, weights):
 # predictions (414,1) = features (414,3) . weights (3,1)
 def mv_mean_square_error(features, data_values, weights):
     # Matrix math allows us to do without loops
-    square_error = ((data_values - mv_predict(features, weights))**2).sum() / len(data_values)
+    square_error = ((data_values - mv_predict(features, weights)) ** 2).sum() / len(data_values)
 
     return square_error
 
@@ -156,14 +162,14 @@ def mv_update_weights(features, data_values, weights, learning_rate):
 # In order to reach the closest possible line function that can predict values to the upmost accuracy
 def multivariable_regression():
     train_rate = 0.009
-    weights = [0.0, 0.0, 0.0]
     epoch = 30000
-    mse_values = [0]*epoch
+    mse_values = [0] * epoch
 
-    features = mv_features_selection(data)
+    features = mv_normalize(mv_features_selection(data))
+    weights = [0.0, 0.0, 0.0, 0.0]
     data_values = data.iloc[:, 7].values
     mse = mv_mean_square_error(features, data_values, weights)
-    print("mean square error is : " + str(mse))
+    # print("Initial mean square error is : " + str(mse))
 
     # Plotting the value-approximation linear function y = m*x + b, on top of the sample scatter plot data
     # in order to showcase the linear function enclosing on the best possible values for the two features: slope m and
@@ -172,16 +178,17 @@ def multivariable_regression():
     for i in range(epoch):
         weights = mv_update_weights(features, data_values, weights, train_rate)
         mse = mv_mean_square_error(features, data_values, weights)
-        print("mean square error is : " + str(mse))
-        print("function is : " + str(weights[0]) + "*x1 + " + str(weights[1]) + "*x2 + " + str(weights[2]) + "*x3")
+        # print("mean square error is : " + str(mse))
+        # print("function is : " + str(weights[1]) + "*x1 + " + str(weights[2]) + "*x2 + " +
+        #      str(weights[3]) + "*x3 + " + str(weights[0]))
         mse_values[i] = mse
 
     fig = mp.figure()
     ax = fig.add_subplot(111)
     ax.plot(mse_values, color="red")
     ax.set_title("Mean Square Error " + format(mse, '.2f'))
-    ax.legend(["with prediction function" + format(weights[0], '.2f') + " * x1 + " + format(weights[1], '.2f') +
-               " * x2 + " + format(weights[2], '.2f') + " * x3", "data_values"],
+    ax.legend(["with prediction function" + format(weights[1], '.2f') + " * x1 + " + format(weights[2], '.2f') +
+               " * x2 + " + format(weights[3], '.2f') + " * x3 + " + format(weights[0]), "data_values"],
               fontsize="small")
     mp.show(block=True)
 
