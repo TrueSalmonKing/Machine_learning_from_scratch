@@ -158,6 +158,8 @@ def plot_decision_boundary(fig, ax, cel, epoch, k_plot, b_plot, kecimens, besnis
     return k_plot, b_plot
 
 
+# function that plots the progression of the accuracy of our model, by visualizing the declining value of the cross
+# entropy loss value in function of each epoch in which we update the weights using regression
 def plot_cross_entropy_loss(cel_values, cel, weights, n):
     mp.ioff()
     fig = mp.figure()
