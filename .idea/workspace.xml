@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="98c9163b-ac9a-4ef8-8533-def91843aa79" name="Changes" comment="Initial upload">
-      <change beforePath="$PROJECT_DIR$/.idea/Machine_learning_from_scratch.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Machine_learning_from_scratch.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Logistic_regression/Logistic_regression.py" beforeDir="false" afterPath="$PROJECT_DIR$/Logistic_regression/Logistic_regression.py" afterDir="false" />
     </list>
@@ -44,7 +42,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/Logistic_regression/Logistic_regression.py" />
-    <property name="settings.editor.selected.configurable" value="configurable.group.build" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
