@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="98c9163b-ac9a-4ef8-8533-def91843aa79" name="Changes" comment="Initial upload">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logistic_regression/Logistic_regression.py" beforeDir="false" afterPath="$PROJECT_DIR$/Logistic_regression/Logistic_regression.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,7 +40,7 @@
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/Logistic_regression/Logistic_regression.py" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/Logistic_regression/Multivariable_logistic_regression.py" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
@@ -49,7 +48,7 @@
       <recent name="$PROJECT_DIR$/Linear_regression" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.Logisitic_regression">
+  <component name="RunManager" selected="Python.Multivariable_logistic_regression">
     <configuration name="Linear_regression_using_gradient_descent (1)" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="Machine_learning_from_scratch" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -113,10 +112,32 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="Multivariable_logistic_regression" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="Machine_learning_from_scratch" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="$USER_HOME$/PycharmProjects/pythonProject/Machine_learning_from_scratch/bin/python" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Logistic_regression" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Logistic_regression/Multivariable_logistic_regression.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="Python.Linear_regression_using_gradient_descent" />
       <item itemvalue="Python.Linear_regression_using_gradient_descent (1)" />
       <item itemvalue="Python.Logisitic_regression" />
+      <item itemvalue="Python.Multivariable_logistic_regression" />
     </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
