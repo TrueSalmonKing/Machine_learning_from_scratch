@@ -7,8 +7,10 @@ import numpy as np
 data = pd.read_excel("../data/Date_Fruit_Datasets/Date_Fruit_Datasets.xlsx", engine='openpyxl')
 
 
+# In order to avoid the issue of exploding gradient and to converge towards the minimum faster, we normalize the
+# range of values for the features into [-1:1]
 def mv_normalize(features):
-    for i in range(34):
+    for i in range(35):
         f_mean = np.mean(features[:, i])
         f_range = np.amax(features[:, i]) - np.amin(features[:, i])
         if f_range:
@@ -17,29 +19,40 @@ def mv_normalize(features):
     return features
 
 
+# We will be working with 34 + 1 (bias) features to train this model
 def features_selection(features):
-    return mv_normalize(features.iloc[:, 0:34].values)
+    bias = np.ones(shape=(len(features), 1))
+    return mv_normalize(np.append(bias, features.iloc[:, 0:34].values, axis=1))
 
 
+# Prediction function for multivariable logistic regression (linear function closest to predicting the values in
+# the data set): predictions (X,K) = features (X,35) . weights (35,K) with K being the number of classes
 def predict(features, weights):
     return softmax_activation(np.dot(features, weights))
 
 
+# We map our predictions into probabilities (values between 0 and 1) using the softmax activation function:
+# S(Xji) = e(Xji) / sum{i..K}(z(Xji))) with K being the number of classes, and j being the sample size
+# This function is the general case for the sigmoid function used in the binary logistic regression with K classes
 def softmax_activation(z):
     return np.exp(z) / np.sum(np.exp(z), axis=1).reshape(-1, 1)
 
 
+# We will use the cost function cross entropy loss instead of mean square error, to optimize our weights for
+# better predictions
+# cross entropy loss => cel() = -1*(Sum{1..n}(Sum{1..K}((Yji * log(S(Xji))))/(n) with Yji being 1 if the target class
+# for Xji is K otherwise it is 0. In order to facilitate this computation we vectorize the Yji values into a vector with
+# only 1 in the correct target class and 0s in the rest of the K-1 classes' placement --> one-hot encoded.
+# cel (1,1) = np.mean(one_hot_data_values (X, K) * log(predictions) (X, K)) [we multiply row by row]
 def cross_entropy_loss(features, one_hot_data_values, weights):
     predictions = predict(features, weights)
-
     return -1 * np.mean(one_hot_data_values * np.log(predictions))
 
 
-# Calculating the gradient descent of the sigmoid function with respect to the weights in order to minimize the error
-# function (sample variance) by updating the weights:
-# partial derivative d(cle()/d(Wi) = (1/n)*(Sum{1..n}((Si-y) * Xi)
-# partial derivative d(cle()/d(b) = (1/n)*(Sum{1..n}((Si-y))
-# with Si(Zi) = 1 / 1 + exp(-Zi) (sigmoid function) and Zi(Xi) = Sum{1..n}(Wi*Xi) + b
+# Calculating the gradient descent of the softmax activation function with respect to the weights in order to
+# minimize the error function by updating the weights:
+# partial derivative d(cle()/d(Wi) = (1/n)*(Sum{1..n}((Xji-Yji) * xi) with xi being a feature
+# partial derivative d(cle()/d(b) = (1/n)*(Sum{1..n}((Xji-Yji))
 def update_weights(features, one_hot_data_values, weights, learning_rate):
     predicted_values = predict(features, weights)
     n = np.shape(one_hot_data_values)[0]
@@ -53,7 +66,7 @@ def update_weights(features, one_hot_data_values, weights, learning_rate):
 
 
 # function that maps a class names to a value between [0, ..., 1/(n-1)] with n being the number of classes, in our
-# classes, it is n = 2, thus the "binary" in binary logistic regression
+# classes, it is n = 7
 def class_name_id(name):
     if name == 'BERHI':
         return 0
@@ -71,14 +84,14 @@ def class_name_id(name):
         return 6
 
 
-# function that applies the function class_name_id onto the list of data values containing the list of both Kecimen and
-# Besni raisins
+# function that applies the function class_name_id onto the list of data values containing the list containing
+# class names
 def class_name_id_creation(data_values, class_name_id_func):
     class_name_id_func = np.vectorize(class_name_id_func)
     return class_name_id_func(data_values)
 
 
-# function that maps the predictions onto the raisin class they "should" be mapped to, meaning it will allow us to
+# function that maps the predictions onto each class they "should" be mapped to, meaning it will allow us to
 # visualize the cross entropy loss by viewing the predictions that are correct and that ones that aren't
 def classify(predictions, data_values, types):
     i = 0
@@ -124,17 +137,17 @@ def one_hot(data_values, n):
     return one_hot_data_values
 
 
-# Binary logistic regression implementation, where we use gradient descent to minimize the cross entropy loss
+# Multivariable logistic regression implementation, where we use gradient descent to minimize the cross entropy loss
 # In order to reach the closest possible line function that can predict values to the upmost accuracy
-def binary_logistic_regression():
-    train_rate = 100
+def multivariable_logistic_regression():
+    train_rate = 0.05
     epoch = 100000
     cel_values = [0] * epoch
 
     features = features_selection(data)
     data_values = class_name_id_creation(data.iloc[:, 34].values, class_name_id)
     one_hot_matrix = one_hot(data_values, 7)
-    weights = np.array([[0.0] * 7] * 34)
+    weights = np.array([[0.0] * 7] * 35)
     cel = cross_entropy_loss(features, one_hot(data_values, 7), weights)
 
     for i in range(epoch):
@@ -159,7 +172,7 @@ def plot_cross_entropy_loss(cel_values, cel):
 
 # Main program entry point
 def main():
-    binary_logistic_regression()
+    multivariable_logistic_regression()
 
 
 if __name__ == '__main__':

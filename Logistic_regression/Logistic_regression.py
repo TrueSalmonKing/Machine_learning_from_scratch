@@ -7,6 +7,8 @@ import numpy as np
 data = pd.read_excel("../data/Raisin_Dataset/Raisin_Dataset.xlsx", engine='openpyxl')
 
 
+# In order to avoid the issue of exploding gradient and to converge towards the minimum faster, we normalize the
+# range of values for the features into [-1:1]
 def mv_normalize(features):
     for i in range(8):
         f_mean = np.mean(features[:, i])
