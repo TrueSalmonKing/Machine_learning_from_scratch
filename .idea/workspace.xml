@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="98c9163b-ac9a-4ef8-8533-def91843aa79" name="Changes" comment="Initial upload">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logistic_regression/Logistic_regression.py" beforeDir="false" afterPath="$PROJECT_DIR$/Logistic_regression/Logistic_regression.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Logistic_regression/Multivariable_logistic_regression.py" beforeDir="false" afterPath="$PROJECT_DIR$/Logistic_regression/Multivariable_logistic_regression.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

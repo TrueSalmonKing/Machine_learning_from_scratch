@@ -4,13 +4,15 @@ import numpy as np
 
 # Taken from https://www.kaggle.com/datasets/muratkokludataset/date-fruit-datasets
 
-data = pd.read_excel("../data/Date_Fruit_Datasets/Date_Fruit_Datasets.xlsx", engine='openpyxl')
+data = pd.read_excel('../data/Date_Fruit_Datasets/Date_Fruit_Datasets.xlsx', 0, engine='openpyxl')
+features_length = 34
+target_index = 34
 
 
 # In order to avoid the issue of exploding gradient and to converge towards the minimum faster, we normalize the
 # range of values for the features into [-1:1]
 def mv_normalize(features):
-    for i in range(35):
+    for i in range(features_length+1):
         f_mean = np.mean(features[:, i])
         f_range = np.amax(features[:, i]) - np.amin(features[:, i])
         if f_range:
@@ -22,7 +24,7 @@ def mv_normalize(features):
 # We will be working with 34 + 1 (bias) features to train this model
 def features_selection(features):
     bias = np.ones(shape=(len(features), 1))
-    return mv_normalize(np.append(bias, features.iloc[:, 0:34].values, axis=1))
+    return mv_normalize(np.append(bias, features.iloc[:, 0:features_length].values, axis=1))
 
 
 # Prediction function for multivariable logistic regression (linear function closest to predicting the values in
@@ -91,44 +93,6 @@ def class_name_id_creation(data_values, class_name_id_func):
     return class_name_id_func(data_values)
 
 
-# function that maps the predictions onto each class they "should" be mapped to, meaning it will allow us to
-# visualize the cross entropy loss by viewing the predictions that are correct and that ones that aren't
-def classify(predictions, data_values, types):
-    i = 0
-    for prediction in predictions:
-        if data_values[i] == 'BERHI':
-            types[0].append(prediction)
-            i += 1
-            continue
-        if data_values[i] == 'DEGLET':
-            types[1].append(prediction)
-            i += 1
-            continue
-        if data_values[i] == 'DOKOL':
-            types[2].append(prediction)
-            i += 1
-            continue
-        if data_values[i] == 'IRAQI':
-            types[3].append(prediction)
-            i += 1
-            continue
-        if data_values[i] == 'ROTANA':
-            types[4].append(prediction)
-            i += 1
-            continue
-        if data_values[i] == 'SAFAVI':
-            types[5].append(prediction)
-            i += 1
-            continue
-        if data_values[i] == 'SOGAY':
-            types[6].append(prediction)
-            i += 1
-            continue
-        i += 1
-
-    return types
-
-
 def one_hot(data_values, n):
     one_hot_data_values = np.array([[0.0] * n] * len(data_values))
     for i in range(len(data_values)):
@@ -145,16 +109,16 @@ def multivariable_logistic_regression():
     cel_values = [0] * epoch
 
     features = features_selection(data)
-    data_values = class_name_id_creation(data.iloc[:, 34].values, class_name_id)
+    data_values = class_name_id_creation(data.iloc[:, target_index].values, class_name_id)
     one_hot_matrix = one_hot(data_values, 7)
-    weights = np.array([[0.0] * 7] * 35)
+    weights = np.array([[0.0] * 7] * (features_length+1))
     cel = cross_entropy_loss(features, one_hot(data_values, 7), weights)
 
     for i in range(epoch):
         weights = update_weights(features, one_hot_matrix, weights, train_rate)
         cel = cross_entropy_loss(features, one_hot_matrix, weights)
         cel_values[i] = cel
-        if not i%10000:
+        if not i % 10000:
             print(cel)
     mp.show()
     plot_cross_entropy_loss(cel_values, cel)
